@@ -9,13 +9,13 @@ jobs:
   merge_job:
     runs-on: ubuntu-latest
     steps:
-    # - uses: actions/checkout@v3
-    # - uses: subosito/flutter-action@v2
-    #   with:
-    #     channel: 'stable'
-    #     cache: true
-    #     cache-key: cacheKey # optional, change this to force refresh cache
-    #     cache-path: ${{ runner.tool_cache }}/flutter # optional, change this to specify the cache path
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        cache: true
+        cache-key: cacheKey # optional, change this to force refresh cache
+        cache-path: ${{ runner.tool_cache }}/flutter # optional, change this to specify the cache path
     
     # - name: Decode Keystore File
     #   run: echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/upload-keystore.jks
