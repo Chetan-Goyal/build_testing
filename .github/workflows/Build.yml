@@ -11,38 +11,39 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - run: |
+    - name: PR Status
+      run: |
         echo PR #${{ github.event.number }} has been merged
     - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-          cache-key: cacheKey # optional, change this to force refresh cache
-          cache-path: ${{ runner.tool_cache }}/flutter # optional, change this to specify the cache path
-      
-      # - name: Decode Keystore File
-      #   run: echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/upload-keystore.jks
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        cache: true
+        cache-key: cacheKey # optional, change this to force refresh cache
+        cache-path: ${{ runner.tool_cache }}/flutter # optional, change this to specify the cache path
+    
+    # - name: Decode Keystore File
+    #   run: echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/upload-keystore.jks
 
-      # - name: Decode android/key.properties
-      #   run: echo "${{ secrets.KEY_PROPERTIES }}" | base64 --decode > android/key.properties
+    # - name: Decode android/key.properties
+    #   run: echo "${{ secrets.KEY_PROPERTIES }}" | base64 --decode > android/key.properties
 
-      - name: Getting Packages
-        run: flutter pub get
+    - name: Getting Packages
+      run: flutter pub get
 
-      - name: Build App
-        run: flutter build apk --release
+    - name: Build App
+      run: flutter build apk --release
 
-      - name: Upload Release apk
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          
-      # - name: Firebase App Distribution
-      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
-      #   with:
-      #     appId: ${{secrets.FIREBASE_APP_ID}}
-      #     token: ${{secrets.FIREBASE_TOKEN}}
-      #     groups: alpha-testers
-      #     file: build/app/outputs/flutter-apk/app-release.apk
+    - name: Upload Release apk
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+        
+    # - name: Firebase App Distribution
+    #   uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
+    #   with:
+    #     appId: ${{secrets.FIREBASE_APP_ID}}
+    #     token: ${{secrets.FIREBASE_TOKEN}}
+    #     groups: alpha-testers
+    #     file: build/app/outputs/flutter-apk/app-release.apk
