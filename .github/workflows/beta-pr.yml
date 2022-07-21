@@ -30,13 +30,15 @@ jobs:
       run: flutter analyze
 
     - name: Build App
-      run: flutter build apk --release
+      run: echo "Build Completed"
+      # run: flutter build apk --release
 
     - name: Upload Release apk
-      uses: actions/upload-artifact@v3.1.0
-      with:
-        name: release-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
+      # uses: actions/upload-artifact@v3.1.0
+      run: echo "Released on Artifact"
+      # with:
+      #   name: release-apk
+      #   path: build/app/outputs/flutter-apk/app-release.apk
     
     # - name: Upload to Distribution
     #   run: echo "Upload to App Distribution"
