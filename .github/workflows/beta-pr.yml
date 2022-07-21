@@ -3,17 +3,12 @@ name: Close Pull Request
 # only trigger on pull request closed events
 on:
   pull_request:
-    types: [ closed ]
+    branches: [ beta ]
 
 jobs:
   merge_job:
-    # this job will only run if the PR has been merged
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - name: PR Status
-      run: |
-        echo PR #${{ github.event.number }} has been merged
     - uses: actions/checkout@v3
     - uses: subosito/flutter-action@v2
       with:
@@ -31,6 +26,9 @@ jobs:
     - name: Getting Packages
       run: flutter pub get
 
+    - name: Analyze Project
+      run: flutter analyze
+
     - name: Build App
       run: flutter build apk --release
 
@@ -39,6 +37,9 @@ jobs:
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
+    
+    # - name: Upload to Distribution
+    #   run: echo "Upload to App Distribution"
         
     # - name: Firebase App Distribution
     #   uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
